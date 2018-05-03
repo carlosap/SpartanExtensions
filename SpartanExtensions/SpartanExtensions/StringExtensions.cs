@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 using SpartanExtensions.RegExp;
 using System.Text;
 using System.Security.Cryptography;
+using SpartanConfigs;
 using Flurl.Http;
+using Newtonsoft.Json.Linq;
 
 namespace SpartanExtensions.Strings
 {
@@ -79,6 +81,13 @@ namespace SpartanExtensions.Strings
                         yield return line;
                 }         
         }
+        public static JObject LoadAsJsonType(this string filePath)
+        {
+            var json = File.ReadAllText(filePath);
+            JObject obj = JObject.Parse(File.ReadAllText(filePath));                         
+            return obj;
+        }
+
         public static async Task<T> LoadAsTypeAsync<T>(this string filePath)
         {
             return await Task.Run(() =>
