@@ -8,9 +8,10 @@
     <RepositoryUrl>https://github.com/carlosap/SpartanExtensions</RepositoryUrl>
     <PackageTags>spartan web api spartan framework</PackageTags>
     <PackageReleaseNotes>Cross-platform base framework. Extension methods enable you to add methods to existing types without creating a new derived type.</PackageReleaseNotes>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
-    <FileVersion>1.0.0.1</FileVersion>
-    <Version>1.0.1</Version>
+    <AssemblyVersion>1.0.0.2</AssemblyVersion>
+    <FileVersion>1.0.0.2</FileVersion>
+    <Version>1.0.2</Version>
+    <PackageIconUrl>https://raw.githubusercontent.com/carlosap/content/master/images/spartan_32x32.png</PackageIconUrl>
   </PropertyGroup>
 
   <ItemGroup>
