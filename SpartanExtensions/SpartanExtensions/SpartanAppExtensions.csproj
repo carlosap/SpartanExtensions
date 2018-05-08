@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Authors>Carlos A. Perez</Authors>
+    <Description>Cross-platform base framework. Extension methods enable you to add methods to existing types without creating a new derived type.</Description>
+    <PackageProjectUrl>https://github.com/carlosap/SpartanExtensions</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/carlosap/SpartanExtensions</RepositoryUrl>
+    <PackageTags>spartan web api spartan framework</PackageTags>
+    <PackageReleaseNotes>Cross-platform base framework. Extension methods enable you to add methods to existing types without creating a new derived type.</PackageReleaseNotes>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <FileVersion>1.0.0.1</FileVersion>
+    <Version>1.0.1</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Flurl.Http" Version="2.3.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+</Project>

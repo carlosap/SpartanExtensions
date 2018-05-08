@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using SpartanExtensions.RegExp;
 using System.Text;
 using System.Security.Cryptography;
-using SpartanConfigs;
 using Flurl.Http;
 using Newtonsoft.Json.Linq;
 
@@ -158,14 +157,13 @@ namespace SpartanExtensions.Strings
         /// </summary>
         /// <param name="text"></param>
         /// <returns>returns encrypt value</returns>
-        public static string EncryptString(this string text)
+        public static string EncryptString(this string text, string key)
         {
-            string keyString = Config.EncryptKey;
-            var key = Encoding.UTF8.GetBytes(keyString);
+            var kbyte = Encoding.UTF8.GetBytes(key);
 
             using (var aesAlg = Aes.Create())
             {
-                using (var encryptor = aesAlg.CreateEncryptor(key, aesAlg.IV))
+                using (var encryptor = aesAlg.CreateEncryptor(kbyte, aesAlg.IV))
                 {
                     using (var msEncrypt = new MemoryStream())
                     {
@@ -196,21 +194,19 @@ namespace SpartanExtensions.Strings
         /// </summary>
         /// <param name="cipherText"></param>
         /// <returns>returns Decrypted phrase</returns>
-        public static string DecryptString(this string cipherText)
+        public static string DecryptString(this string cipherText, string key)
         {
-            string keyString = Config.EncryptKey;
             var fullCipher = Convert.FromBase64String(cipherText);
-
             var iv = new byte[16];
             var cipher = new byte[16];
 
             Buffer.BlockCopy(fullCipher, 0, iv, 0, iv.Length);
             Buffer.BlockCopy(fullCipher, iv.Length, cipher, 0, iv.Length);
-            var key = Encoding.UTF8.GetBytes(keyString);
+            var kbyte = Encoding.UTF8.GetBytes(key);
 
             using (var aesAlg = Aes.Create())
             {
-                using (var decryptor = aesAlg.CreateDecryptor(key, iv))
+                using (var decryptor = aesAlg.CreateDecryptor(kbyte, iv))
                 {
                     string result;
                     using (var msDecrypt = new MemoryStream(cipher))
@@ -223,7 +219,6 @@ namespace SpartanExtensions.Strings
                             }
                         }
                     }
-
                     return result;
                 }
             }
@@ -245,19 +240,19 @@ namespace SpartanExtensions.Strings
         /// </summary>
         /// <param name="value"></param>
         /// <returns>value or left side of string value</returns>
-        public static string GetLeftSplitValue(this string value)
-        {
+        //public static string GetLeftSplitValue(this string value)
+        //{
 
-            foreach (string item in Config.RemovePhrases)
-            {
-                if (value.Contains(item))
-                {
-                    return value.Split(item)[0];
-                }
-            }
+        //    foreach (string item in Config.RemovePhrases)
+        //    {
+        //        if (value.Contains(item))
+        //        {
+        //            return value.Split(item)[0];
+        //        }
+        //    }
 
-            return value;
-        }
+        //    return value;
+        //}
 
         /// <summary>
         /// Write password checker method - must contain min 6 char and max 12 char,
@@ -265,54 +260,54 @@ namespace SpartanExtensions.Strings
         /// </summary>
         /// <param name="value">raw password</param>
         /// <returns>string "VALID" if passes password validation</returns>
-        public static string IsValidPassword(this string value)
-        {
-            if (value.Length < Config.User.API.PasswordMin || value.Length > Config.User.API.PasswordMax)
-                return $"min {Config.User.API.PasswordMin} chars, max {Config.User.API.PasswordMax} chars";
+        //public static string IsValidPassword(this string value)
+        //{
+        //    if (value.Length < Config.User.API.PasswordMin || value.Length > Config.User.API.PasswordMax)
+        //        return $"min {Config.User.API.PasswordMin} chars, max {Config.User.API.PasswordMax} chars";
 
             
-            if (value.Contains(" "))
-                return "Can not have white space";
+        //    if (value.Contains(" "))
+        //        return "Can not have white space";
 
-            if (Config.User.API.RequireUpperCase)
-            {
-                if (!value.Any(char.IsUpper))
-                    return "At least 1 upper case letter";
-            }
-
-
-            if (Config.User.API.RequireLowerCase)
-            {
-                if (!value.Any(char.IsLower))
-                    return "At least 1 lower case letter";
-            }
+        //    if (Config.User.API.RequireUpperCase)
+        //    {
+        //        if (!value.Any(char.IsUpper))
+        //            return "At least 1 upper case letter";
+        //    }
 
 
-            if (Config.User.API.AvoidNoTwoSimilarChars)
-            {
-                for (int i = 0; i < value.Length - 1; i++)
-                {
-                    if (value[i] == value[i + 1])
-                        return "No two similar chars consecutively";
-                }
-            }
+        //    if (Config.User.API.RequireLowerCase)
+        //    {
+        //        if (!value.Any(char.IsLower))
+        //            return "At least 1 lower case letter";
+        //    }
 
 
-            //At least 1 special char
-            if (Config.User.API.RequireSpecialChars)
-            {
-                char[] specialCharactersArray = Config.User.API.SpecialChars.ToCharArray();
-                foreach (char c in specialCharactersArray)
-                {
-                    if (value.Contains(c))
-                    {
-                        return "VALID";
-                    }
-                }
-                return "At least 1 special char";
-            }
-            return "unknown state";
-        }
+        //    if (Config.User.API.AvoidNoTwoSimilarChars)
+        //    {
+        //        for (int i = 0; i < value.Length - 1; i++)
+        //        {
+        //            if (value[i] == value[i + 1])
+        //                return "No two similar chars consecutively";
+        //        }
+        //    }
+
+
+        //    //At least 1 special char
+        //    if (Config.User.API.RequireSpecialChars)
+        //    {
+        //        char[] specialCharactersArray = Config.User.API.SpecialChars.ToCharArray();
+        //        foreach (char c in specialCharactersArray)
+        //        {
+        //            if (value.Contains(c))
+        //            {
+        //                return "VALID";
+        //            }
+        //        }
+        //        return "At least 1 special char";
+        //    }
+        //    return "unknown state";
+        //}
 
     }
 }
