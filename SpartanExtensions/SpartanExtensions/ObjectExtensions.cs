@@ -22,7 +22,7 @@ namespace SpartanExtensions.Objects
                     NullValueHandling = NullValueHandling.Ignore
                 });
             }
-            return JsonConvert.SerializeObject(arg);
+            return JsonConvert.SerializeObject(arg, Formatting.Indented);
         }
     }
 }

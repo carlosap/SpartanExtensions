@@ -19,6 +19,7 @@ namespace SpartanExtensions.Enumerables
                 }
             }
         }
+
         public static IEnumerable<string> GetWords(this IEnumerable<string> lines)
         {
             foreach (var line in lines)

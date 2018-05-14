@@ -15,6 +15,13 @@ namespace SpartanExtensions.Strings
 {
     public static class StringExtensions
     {
+        /// <summary>
+        /// Saves text content to file System
+        /// </summary>
+        /// <param name="filePath">file path</param>
+        /// <param name="content">text to write</param>
+        public static void SaveTo(this string filePath, string content) => File.WriteAllText(filePath,content);
+
         public static void EncryptFile(string filePath, byte[] encryptedBytes) => File.WriteAllBytes(filePath, encryptedBytes);
         public static string ReplaceInvalidCharsForUnderscore(this string strvalue) => Path.GetInvalidFileNameChars().Aggregate(ClearInvalidHttpChars(strvalue), (current, c) => current.Replace(c, '_'));
         public static string ClearInvalidHttpChars(this string strvalue) => strvalue.Replace("http", "").Replace("https", "").Replace(":", "").Replace("//", "").Replace("www.", "");
@@ -65,6 +72,7 @@ namespace SpartanExtensions.Strings
                 ? source.Substring(at1 + beginDelim.Length, at2 - at1 - beginDelim.Length)
                 : source.Substring(at1, at2 - at1 + endDelim.Length);
         }
+
         public static IEnumerable<string> GetFileNames(this string path, string pattern, SearchOption options = SearchOption.AllDirectories)
         {
             foreach (var fileName in Directory.EnumerateFiles(path, pattern))
@@ -234,25 +242,6 @@ namespace SpartanExtensions.Strings
             return await url.GetStringAsync();
         }
 
-        /// <summary>
-        /// returns left side of string if phrases found
-        /// in Config.RemovePhrases. 
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns>value or left side of string value</returns>
-        //public static string GetLeftSplitValue(this string value)
-        //{
-
-        //    foreach (string item in Config.RemovePhrases)
-        //    {
-        //        if (value.Contains(item))
-        //        {
-        //            return value.Split(item)[0];
-        //        }
-        //    }
-
-        //    return value;
-        //}
 
         /// <summary>
         /// Write password checker method - must contain min 6 char and max 12 char,
